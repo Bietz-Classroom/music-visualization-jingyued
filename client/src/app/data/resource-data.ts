@@ -16,8 +16,8 @@ export abstract class ResourceData {
 			this.imageURL = '../../assets/unknown.jpg';
 		}
 
-		if('spotify' in objectModel['external_urls']) {
-			this.url = objectModel['external_urls']['spotify'];
-		}
+		// if('spotify' in objectModel['external_urls']) {
+		// 	this.url = objectModel['external_urls']['spotify'];
+		// }
 	}
 }

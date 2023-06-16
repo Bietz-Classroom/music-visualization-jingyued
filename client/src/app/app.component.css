@@ -1,3 +1,35 @@
+
 nav {
-	margin-bottom: 20px;
 }
+.navbar-brand {
+
+	color: #15C151; /* Set the desired color here */
+	font-weight: bold;
+	font-size: 24px;
+ }
+.btn-custom {
+	background-color: white;
+	color: black;
+	transition: transform 0.3s, box-shadow 0.3s;
+	border-radius: 20px;
+	font-size: 18px;
+	padding: 6px 20px;
+
+}
+
+.btn-custom:hover {
+	transform: scale(1.1);
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+html,
+body {
+	height: 100%;
+}
+
+.container-fluid {
+	min-height: 100vh;
+	background: linear-gradient(to bottom right ,black,rgb(24,24,24));
+}
+
+
+

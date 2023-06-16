@@ -5,18 +5,13 @@ import { AppRoutingModule } from './app-routing.module';
 import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { SearchComponent } from './components/search/search.component';
-import { TrackListComponent } from './components/track-list/track-list.component';
-import { HomePageComponent } from './pages/home-page/home-page.component';
-import { VegaVizComponent } from './components/vega-viz/vega-viz.component';
+
 
 
 @NgModule({
   declarations: [
     AppComponent,
     SearchComponent,
-    TrackListComponent,
-    HomePageComponent,
-    VegaVizComponent,
   ],
   imports: [
     BrowserModule,

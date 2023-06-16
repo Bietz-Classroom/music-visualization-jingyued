@@ -7,6 +7,7 @@ import { TrackData } from '../data/track-data';
 import { ResourceData } from '../data/resource-data';
 import { ProfileData } from '../data/profile-data';
 import { TrackFeature } from '../data/track-feature';
+import {PlaylistData} from "../data/playlist-data";
 
 @Injectable({
   providedIn: 'root'
@@ -33,12 +34,18 @@ export class SpotifyService {
     });
   }
 
-  searchFor(category:string, resource:string):Promise<ResourceData[]> {
-    //TODO: identify the search endpoint in the express webserver (routes/index.js) and send the request to express.
-    //Make sure you're encoding the resource with encodeURIComponent().
-    //Depending on the category (artist, track, album, playlist, etc.), return an array of that type of data.
-    //JavaScript's "map" function might be useful for this, but there are other ways of building the array.
-    return null as any;
+  //TODO: identify the search endpoint in the express webserver (routes/index.js) and send the request to express.
+  //Make sure you're encoding the resource with encodeURIComponent().
+  //Depending on the category (artist, track, album, playlist, etc.), return an array of that type of data.
+  //JavaScript's "map" function might be useful for this, but there are other ways of building the array.
+  //JavaScript's "map" function might be useful for this, but there are other ways of building the array.
+
+  searchFor(category:string, resource:string):Promise<PlaylistData[]> {
+    const encodedResource = encodeURIComponent(resource);
+    const endpoint = `/search/${category}/${encodedResource}`;
+    return this.sendRequestToExpress(endpoint).then((data) => {
+      return data.playlists.items.map((item: any) => new PlaylistData(item));
+    });
   }
 
   getArtist(artistId:string):Promise<ArtistData> {
@@ -67,10 +74,31 @@ export class SpotifyService {
     return null as any;
   }
 
+  getPlaylist(playlistId:string):Promise<PlaylistData> {
+    const endpoint = `/playlist/${playlistId}`;
+    return this.sendRequestToExpress(endpoint).then((data) => {
+      return new PlaylistData(data);
+    });
+  }
+
   getTracksForAlbum(albumId:string):Promise<TrackData[]> {
     //TODO: use the tracks for album endpoint to make a request to express.
     return null as any;
   }
+
+  getTracksForPlaylist(playlistId:string):Promise<TrackData[]> {
+    //TODO: use the tracks for playlist endpoint to make a request to express.
+      const endpoint = `/playlist-tracks/${playlistId}`;
+      return this.sendRequestToExpress(endpoint).then((data) => {
+        return data.items.map((item: any) => new TrackData({
+          name: item.track.name,
+          id: item.track.id,
+          artists: item.track.artists.map((artist) => artist.name),
+          duration_ms: item.track.duration_ms,
+        }));
+
+      });
+    }
 
   getTrack(trackId:string):Promise<TrackData> {
     //TODO: use the track endpoint to make a request to express.
@@ -80,5 +108,17 @@ export class SpotifyService {
   getAudioFeaturesForTrack(trackId:string):Promise<TrackFeature[]> {
     //TODO: use the audio features for track endpoint to make a request to express.
     return null as any;
+  }
+
+  getAudioFeaturesForTracks(trackIdsString:string):Promise<TrackFeature[]> {
+    //TODO: use the audio features for track endpoint to make a request to express.
+    const endpoint = `/tracks-audio-features/${trackIdsString}`;
+    return this.sendRequestToExpress(endpoint).then((data) => {
+      let count = 1; // Initialize the count to 1
+      return data.audio_features.map((item: any) => new TrackFeature(
+        item.id, item.danceability, item.energy,count++
+      ));
+
+    });
   }
 }

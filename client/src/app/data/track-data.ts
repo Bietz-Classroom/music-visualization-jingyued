@@ -3,22 +3,22 @@ import { ArtistData } from './artist-data';
 import { AlbumData } from './album-data';
 
 export class TrackData extends ResourceData {
-	album:AlbumData;
-	artists:ArtistData[];
+	// album:AlbumData;
+	artists:any[];
 	duration_ms:number;
 
 	constructor(objectModel:{}) {
-		super(objectModel);
+		super({
+			name: objectModel['name'],
+			id: objectModel['id']
+		});
 		this.category = "track";
 
-		this.artists = objectModel['artists'].map((artist) => {
-			return new ArtistData(artist);
-		});
+		this.artists = objectModel['artists'];
 
-		if(objectModel['album']) {
-			this.album = new AlbumData(objectModel['album']);
-		}
-
+		// if(objectModel['album']) {
+		// 	this.album = new AlbumData(objectModel['album']);
+		// }
 		this.duration_ms = objectModel['duration_ms'];
 	}
 

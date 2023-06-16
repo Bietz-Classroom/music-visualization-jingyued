@@ -186,9 +186,19 @@ router.get('/album/:id', function(req, res, next) {
 	makeAPIRequest('https://api.spotify.com/v1/albums/' + id, res);
 });
 
+router.get('/playlist/:id', function(req, res, next) {
+	var id = req.params.id;
+	makeAPIRequest('https://api.spotify.com/v1/playlists/' + id, res);
+});
+
 router.get('/album-tracks/:id', function(req, res, next) {
 	var id = req.params.id;
 	makeAPIRequest('https://api.spotify.com/v1/albums/' + id + '/tracks', res);
+});
+
+router.get('/playlist-tracks/:id', function(req, res, next) {
+	var id = req.params.id;
+	makeAPIRequest('https://api.spotify.com/v1/playlists/' + id + '/tracks?limit=100', res);
 });
 
 router.get('/track/:id', function(req, res, next) {
@@ -199,6 +209,11 @@ router.get('/track/:id', function(req, res, next) {
 router.get('/track-audio-features/:id', function(req, res, next) {
 	var id = req.params.id;
 	makeAPIRequest('https://api.spotify.com/v1/audio-features/' + id, res);
+});
+
+router.get('/tracks-audio-features/:ids', function(req, res, next) {
+	var ids = req.params.ids;
+	makeAPIRequest('https://api.spotify.com/v1/audio-features?ids=' + ids, res);
 });
 
 module.exports = router;

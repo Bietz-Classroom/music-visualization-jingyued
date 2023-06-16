@@ -1,22 +1,28 @@
 import * as chroma from 'chroma-js';
 
 export class TrackFeature {
-	static FeatureTypes = ['danceability', 'energy', 'speechiness', 'acousticness', 'instrumentalness', 'liveness', 'valence'];
-
 	id:string;
-	name:string;
-	percent:number;
-
-	constructor(feature:string, percent:number) {
-		this.name = feature;
-		this.percent = percent;
+	danceability:number;
+	energy:number;
+	count: number;
+	constructor(id, danceability, energy, count) {
+		this.id = id;
+		this.danceability = danceability;
+		this.energy = energy;
+		this.count =count;
 	}
 
-	get percentageString() {
-		return (this.percent*100).toFixed() + '%';
+	get percentageDanceability() {
+		return (this.danceability*100).toFixed() + '%';
+	}
+	get percentageEnergy() {
+		return (this.energy*100).toFixed() + '%';
 	}
 
-	get color() {
-		return chroma.mix('red', 'green', this.percent, 'hsl').hex();
+	get colorDanceability() {
+		return chroma.mix('red', 'green', this.danceability, 'hsl').hex();
+	}
+	get colorEnergy() {
+		return chroma.mix('red', 'green', this.energy, 'hsl').hex();
 	}
 }
